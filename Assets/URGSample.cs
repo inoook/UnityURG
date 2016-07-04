@@ -20,6 +20,11 @@ public class URGSample : MonoBehaviour {
 		}
 	}
 
+	[SerializeField]
+	string ip_address = "192.168.0.10";
+	[SerializeField]
+	int port_number = 10940;
+
 	List<DetectObject> detectObjects;
 	List<int> detectIdList;
 
@@ -46,13 +51,14 @@ public class URGSample : MonoBehaviour {
 
 	int drawCount;
 
+
 	// Use this for initialization
 	void Start () {
 		distances = new List<long>();
 		strengths = new List<long>();
 
 		urg = this.gameObject.AddComponent<UrgDeviceEthernet>();
-		urg.StartTCP();
+		urg.StartTCP(ip_address, port_number);
 	}
 	
 	// Update is called once per frame
@@ -333,13 +339,14 @@ public class URGSample : MonoBehaviour {
 
 	void OnGUI()
 	{
-		if(GUILayout.Button("VV")){
+		// https://sourceforge.net/p/urgnetwork/wiki/scip_jp/
+		if(GUILayout.Button("VV: (バージョン情報の取得)")){
 			urg.Write(SCIP_library.SCIP_Writer.VV());
 		}
 //		if(GUILayout.Button("SCIP2")){
 //			urg.Write(SCIP_library.SCIP_Writer.SCIP2());
 //		}
-		if(GUILayout.Button("PP")){
+		if(GUILayout.Button("PP: (パラメータ情報の取得)")){
 			urg.Write(SCIP_library.SCIP_Writer.PP());
 		}
 		if(GUILayout.Button("MD: (計測＆送信要求)")){
@@ -348,7 +355,7 @@ public class URGSample : MonoBehaviour {
 		if(GUILayout.Button("ME: (計測＆距離データ・受光強度値送信要求)")){
 			urg.Write(SCIP_library.SCIP_Writer.ME(0, 1080, 1, 1, 0));
 		}
-		if(GUILayout.Button("BM")){
+		if(GUILayout.Button("BM: (レーザの発光)")){
 			urg.Write(SCIP_library.SCIP_Writer.BM());
 		}
 		if(GUILayout.Button("GD: (計測済み距離データ送信要求)")){

@@ -28,9 +28,12 @@ public class UrgDeviceEthernet : UrgDevice
 	private string ip_address = "192.168.0.10";
 	private int port_number = 10940;
 
-	public void StartTCP()
+	public void StartTCP(string ip = "192.168.0.10", int port = 10940)
     {
 //		messageQueue = Queue.Synchronized(new Queue());
+
+		ip_address = ip;
+		port_number = port;
 
 		distances = new List<long>();
 		strengths = new List<long>();
